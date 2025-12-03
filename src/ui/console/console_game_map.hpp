@@ -18,7 +18,7 @@ namespace biv {
 			
 			void add_obj(ConsoleUIObject*);
 			void clear() noexcept override;
-			void refresh() noexcept override;
+			void refresh_map() noexcept override;
 			void remove_obj(ConsoleUIObject*);
 			void remove_objs() override;
 			void show() const noexcept override;

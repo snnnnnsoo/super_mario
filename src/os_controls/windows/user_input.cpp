@@ -1,17 +1,19 @@
 #include "user_input.hpp"
 
-#include <windows.h>
+#include <ncurses.h>
 
 using biv::os::UserInput;
 
 UserInput biv::os::get_user_input() {
-	if (GetKeyState('A') < 0) {
+    // Удален лишний вызов initscr()!
+    int action = getch();
+	if (action == int('a')) {
 		return UserInput::MAP_RIGHT;
-	} else if (GetKeyState('D') < 0) {
+	} else if (action == int('d')) {
 		return UserInput::MAP_LEFT;
-	} else if (GetKeyState(VK_SPACE) < 0) {
+	} else if (action == int(' ')) {
 		return UserInput::MARIO_JUMP;
-	} else if (GetKeyState(VK_ESCAPE) < 0) {
+	} else if (action == 27) { // 27 = ESC
 		return UserInput::EXIT;
 	} else {
 		return UserInput::NO_INPUT;

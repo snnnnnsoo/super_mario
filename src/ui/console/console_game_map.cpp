@@ -1,8 +1,9 @@
 #include "console_game_map.hpp"
 
 #include <algorithm>
-#include <cstdio>
-#include <iostream>
+#include <cstring>  // Добавлено для strcpy
+#include <ncurses.h> // Добавлено/проверено для addstr/refresh
+
 
 using biv::ConsoleGameMap;
 
@@ -29,14 +30,16 @@ void ConsoleGameMap::add_obj(ConsoleUIObject* obj) {
 }
 
 void ConsoleGameMap::clear() noexcept {
-	// Воздух
+
+	// // Воздух
 	for (int i = 0; i < width; i++) {
 		map[0][i] = ' ';
 	}
 	map[0][width] = '\0';
 	
 	for (int i = 1; i < height - 3; i++) {
-		std::sprintf(map[i], map[0]);
+		// ИСПРАВЛЕНИЕ: Используем strcpy вместо sprintf
+		std::strcpy(map[i], map[0]);
 	}
 	
 	// Вода
@@ -46,13 +49,12 @@ void ConsoleGameMap::clear() noexcept {
 	map[height - 3][width] = '\0';
 	
 	for (int i = height - 2; i < height; i++) {
-		std::sprintf(map[i], map[height - 3]);
+		// ИСПРАВЛЕНИЕ: Используем strcpy вместо sprintf
+		std::strcpy(map[i], map[height - 3]);
 	}
 }
 
-void ConsoleGameMap::refresh() noexcept {
-	clear();
-	
+void ConsoleGameMap::refresh_map() noexcept {
 	for (ConsoleUIObject* obj: objs) {
 		int left = obj->get_left();
 		int top = obj->get_top();
@@ -80,7 +82,16 @@ void ConsoleGameMap::remove_objs() {
 }
 
 void ConsoleGameMap::show() const noexcept {
+    // ИСПРАВЛЕНИЕ: Используем функции ncurses для вывода
+    // Курсор уже установлен в (0, 0) функцией set_cursor_start_position() в main.cpp.
+    
 	for (int i = 0; i < height; i++) {
-		std::cout << map[i];
+		// Выводим строку карты
+		addstr(map[i]);
+		// Переводим на следующую строку ncurses
+		addch('\n');
 	}
+	
+	// ОБЯЗАТЕЛЬНОЕ ИСПРАВЛЕНИЕ: Обновляем физический экран терминала
+	refresh();
 }

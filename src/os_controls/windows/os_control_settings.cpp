@@ -1,18 +1,20 @@
 #include "os_control_settings.hpp"
-
-#include <windows.h>
+#include <ncurses.h>
 
 void biv::os::init_settings() {
-	void* handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_CURSOR_INFO structCursorInfo;
-	GetConsoleCursorInfo(handle, &structCursorInfo);
-	structCursorInfo.bVisible = FALSE;
-	SetConsoleCursorInfo(handle, &structCursorInfo);
+
+    initscr();          // Инициализация ncurses
+    curs_set(0);        // Скрыть курсор
+    noecho();           // Отключить автоматический вывод вводимых символов
+    nodelay(stdscr, TRUE);
+    scrollok(stdscr, FALSE);  // ОТКЛЮЧИТЬ ПРОКРУТКУ
+  
+}
+
+void biv::os::cleanup_screen(){
+    endwin();
 }
 
 void biv::os::set_cursor_start_position() {
-	COORD coord;
-	coord.X = 0;
-	coord.Y = 0;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+    move(0, 0); // Установка курсора в верхний левый угол (0, 0)
 }

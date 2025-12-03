@@ -27,7 +27,7 @@
 int main() {
 	// 1. Установка параметров игры
 	using namespace std::chrono_literals;
-	biv::os::init_settings();
+	biv::os::init_settings(); // Инициализация ncurses
 	
 	biv::Game game;
 	biv::UIFactory* ui_factory = new biv::ConsoleUIFactory(&game);
@@ -91,15 +91,17 @@ int main() {
 		}
 		
 		// 4. Обновление изображения на экране
-		game_map->refresh();
-		biv::os::set_cursor_start_position();
-		game_map->show();
-		std::this_thread::sleep_for(10ms);
+		game_map->clear();
+		game_map->refresh_map();
+		biv::os::set_cursor_start_position(); // Устанавливаем курсор в (0, 0)
+		game_map->show(); // Выводит карту и вызывает ncurses::refresh()
+
+		std::this_thread::sleep_for(40ms);
 	} while (
 		/* 5. Проверка того, не окончена ли игра */ 
 		!game.is_finished()
 	);
-	
+	biv::os::cleanup_screen(); // Завершение ncurses
 	// 6. Завершение
 	
 }
