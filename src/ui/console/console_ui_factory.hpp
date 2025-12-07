@@ -2,6 +2,7 @@
 
 #include "console_box.hpp"
 #include "console_enemy.hpp"
+#include "console_flying_enemy.hpp"
 #include "console_full_box.hpp"
 #include "console_game_map.hpp"
 #include "console_mario.hpp"
@@ -28,6 +29,9 @@ namespace biv {
 				const Coord& top_left, const int width, const int height
 			) override;
 			void create_enemy(
+				const Coord& top_left, const int width, const int height
+			) override;
+			void create_flying_enemy(
 				const Coord& top_left, const int width, const int height
 			) override;
 			void create_full_box(
