@@ -96,7 +96,7 @@ int main() {
 		biv::os::set_cursor_start_position(); // Устанавливаем курсор в (0, 0)
 		game_map->show(); // Выводит карту и вызывает ncurses::refresh()
 
-		std::this_thread::sleep_for(40ms);
+		std::this_thread::sleep_for(50ms);
 	} while (
 		/* 5. Проверка того, не окончена ли игра */ 
 		!game.is_finished()

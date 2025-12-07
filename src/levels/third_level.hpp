@@ -1,12 +1,11 @@
 #pragma once
 
 #include "game_level.hpp"
-#include "third_level.hpp"
 
 namespace biv {
-	class SecondLevel : public GameLevel {
+	class ThirdLevel : public GameLevel {
 		public:
-			SecondLevel(UIFactory* ui_factory);
+			ThirdLevel(UIFactory* ui_factory);
 			
 			GameLevel* get_next() override;
 			bool is_final() const noexcept override;
