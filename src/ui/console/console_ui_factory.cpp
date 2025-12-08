@@ -49,6 +49,16 @@ void ConsoleUIFactory::create_flying_enemy(
 	game->add_collisionable(flying_enemy);
 	game_map->add_obj(flying_enemy);
 }
+void ConsoleUIFactory::create_jumping_enemy(
+	const Coord& top_left, const int width, const int height
+) {
+	ConsoleJumpingEnemy* jumping_enemy = new ConsoleJumpingEnemy(top_left, width, height);
+	enemies.push_back(jumping_enemy);
+	game->add_map_movable(jumping_enemy);
+	game->add_movable(jumping_enemy);
+	game->add_collisionable(jumping_enemy);
+	game_map->add_obj(jumping_enemy);
+}
 
 void ConsoleUIFactory::create_full_box(
 	const Coord& top_left, const int width, const int height
